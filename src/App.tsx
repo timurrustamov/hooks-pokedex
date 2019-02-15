@@ -8,6 +8,9 @@ import PagesRoot from './pages';
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
+    body2: {
+      fontSize: '1rem',
+    },
   },
   palette: {
     text: {

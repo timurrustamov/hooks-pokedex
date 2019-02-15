@@ -1,15 +1,18 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 
 import PokemonCard from '../../components/PokemonCard';
+import { PokemonType } from '../../components/PokemonCard/Stats/Type';
+
 import createUseAxios from '../../hooks/useAxios';
 import useMousePosition from '../../hooks/useMousePosition';
 
 const usePokemon = createUseAxios((name?: string) => ({
-  url: name ? `https://pokeapi.co/api/v2/pokemon/${name.toLowerCase()}` : undefined,
+  url: name ? `${process.env.POKEMON_API}/pokemon/${name.toLowerCase()}` : undefined,
 }));
 
 const Pokedex: FunctionComponent = () => {
   const [name, setName] = useState('Pokemon');
+  const [type, setType] = useState<PokemonType>('electric');
   const { x, y } = useMousePosition();
 
   useEffect(() => {
@@ -17,19 +20,16 @@ const Pokedex: FunctionComponent = () => {
   }, [name]);
 
   const { data } = usePokemon(name);
-  const pokemonId = data ? data.id : 25;
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   return (
     <PokemonCard
-      name={name}
+      id={150}
       onNameChange={(newName) => setName(newName)}
+      type={type}
+      onTypeChange={(newType) => setType(newType)}
       x={x}
       y={y}
-      src={`https://pokeres.bastionbot.org/images/pokemon/${pokemonId}.png`}
+      {...data}
+      name={name}
     />
   );
 };

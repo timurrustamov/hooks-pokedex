@@ -10,7 +10,8 @@
             "options": ["single", "jsx-double"]
         },
         "object-literal-sort-keys": false,
-        "object-literal-key-quotes": false
+        "object-literal-key-quotes": false,
+        "no-console": false
     },
     "rulesDirectory": []
 }

@@ -1,20 +1,12 @@
-import React, { ChangeEvent, FunctionComponent, useCallback, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 
-import { Theme, Typography } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import Wrapper from './Wrapper';
 
-export type PokemonCardProps = {
-  name?: string;
-  onNameChange?: (name: string) => void;
-  src?: string;
-  type?: string;
-  hp?: number;
-  weight?: string;
-  height?: string;
-  x?: number;
-  y?: number;
-};
+import Id from './Id';
+import Stats from './Stats';
+import { PokemonType } from './Stats/Type';
+import Tiltable from './Tiltable';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -46,53 +38,54 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '120%',
     transform: 'translate(-10%, -10%)',
   },
-
-  hp: {
-    margin: theme.spacing.unit * 2,
-    position: 'relative',
-    color: 'white',
-    '&:before': {
-      position: 'absolute',
-      top: -8,
-      left: '50%',
-      width: '50%',
-      height: 5,
-      borderRadius: 3,
-      background: theme.palette.common.white,
-      content: '" "',
-      transform: 'translateX(-50%)',
-    },
-  },
 }));
 
+export type PokemonCardProps = {
+  id?: string | number
+  name?: string
+  types?: [
+    {
+      type: {
+        name: PokemonType,
+      },
+    }
+  ]
+  onNameChange?: (name: string) => void
+  type?: PokemonType
+  onTypeChange?: (name: PokemonType) => void
+  hp?: number
+  weight?: string
+  height?: string
+  x?: number
+  y?: number,
+};
+
 const PokemonCard: FunctionComponent<PokemonCardProps> = (props) => {
+  const {
+    id = 25,
+    name = 'Pokemon',
+    onNameChange,
+    type,
+    types,
+    weight,
+    height,
+    onTypeChange,
+  } = props;
   const classes = useStyles();
 
-  const { onNameChange, name = 'Pokemon' } = props;
-  const handleOnNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    if (onNameChange) {
-      onNameChange(e.target.value);
-    }
-  }, [onNameChange]);
-
   return (
-    <Wrapper
-      className={classes.root}
-      x={props.x}
-      y={props.y}
-    >
+    <Tiltable className={classes.root} x={props.x} y={props.y}>
       <div className={classes.card}>
-        {props.src && <img className={classes.image} src={props.src} />}
-        <div>
-          <input className={classes.name} value={name} onChange={handleOnNameChange} />
-          <div className={classes.hp}>
-            <Typography align="center" variant="h5">
-              HP 80
-            </Typography>
-          </div>
-        </div>
+        {id && <img className={classes.image} src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} />}
+        <input
+          value={name}
+          onChange={(e) => onNameChange && onNameChange(e.target.value)}
+          className={classes.name}
+        />
+        <Id id={id} />
+        <Stats type={types ? types[0].type.name : type} weight={weight} height={height} onTypeChange={onTypeChange} />
       </div>
-    </Wrapper>
+    </Tiltable>
   );
 };
 
