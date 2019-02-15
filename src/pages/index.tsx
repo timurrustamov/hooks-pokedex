@@ -8,7 +8,7 @@ const useStyles = makeStyles({
   root: {
     display: 'flex',
     minHeight: '100vh',
-    minWidth: '100vw',
+    maxWidth: '100vw',
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',

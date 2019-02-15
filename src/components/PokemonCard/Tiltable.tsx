@@ -9,16 +9,16 @@ const interpolate = (x: number, y: number, s: number) => {
 };
 
 export type WrapperProps = {
-  x?: number;
-  y?: number;
+  tiltX?: number;
+  tiltY?: number;
 } & Omit<HTMLProps<HTMLDivElement>, 'ref'>;
 
 const Wrapper: FunctionComponent<WrapperProps> = (props) => {
-  const { x = 0, y = 0, ...restProps } = props;
+  const { tiltX = 0, tiltY = 0, ...restProps } = props;
 
   let xys = [0, 0, 1];
-  if (x || y) {
-    xys = calc(x, y);
+  if (tiltX || tiltY) {
+    xys = calc(tiltX, tiltY);
   }
   const animation = useSpring({ xys });
   return (

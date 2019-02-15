@@ -1,7 +1,8 @@
 {
     "defaultSeverity": "error",
     "extends": [
-        "tslint:recommended"
+        "tslint:recommended",
+        "tslint-react-hooks"
     ],
     "jsRules": {},
     "rules": {
@@ -11,7 +12,8 @@
         },
         "object-literal-sort-keys": false,
         "object-literal-key-quotes": false,
-        "no-console": false
+        "no-console": false,
+        "react-hooks-nesting": "error"
     },
     "rulesDirectory": []
 }

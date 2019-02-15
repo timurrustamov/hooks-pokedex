@@ -10,6 +10,8 @@ import Tiltable from './Tiltable';
 
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
+    maxHeight: 600,
+    maxWidth: 400,
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
@@ -56,8 +58,8 @@ export type PokemonCardProps = {
   hp?: number
   weight?: string
   height?: string
-  x?: number
-  y?: number,
+  tiltX?: number
+  tiltY?: number,
 };
 
 const PokemonCard: FunctionComponent<PokemonCardProps> = (props) => {
@@ -70,11 +72,13 @@ const PokemonCard: FunctionComponent<PokemonCardProps> = (props) => {
     weight,
     height,
     onTypeChange,
+    tiltX,
+    tiltY,
   } = props;
   const classes = useStyles();
 
   return (
-    <Tiltable className={classes.root} x={props.x} y={props.y}>
+    <Tiltable className={classes.root} tiltX={tiltX} tiltY={tiltY}>
       <div className={classes.card}>
         {id && <img className={classes.image} src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} />}
         <input

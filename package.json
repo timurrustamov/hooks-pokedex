@@ -23,6 +23,7 @@
     "@types/react-dom": "^16.8.0",
     "parcel-bundler": "^1.11.0",
     "tslint": "^5.12.1",
+    "tslint-react-hooks": "^1.1.0",
     "typescript": "^3.3.3"
   }
 }
