@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const Type: FunctionComponent<TypeProps> = (props) => {
-  const { value = 'fairy', onChange } = props;
+  const { value = 'ground', onChange } = props;
   const classes = useStyles();
   const background = pokemonTypeColors[value];
 

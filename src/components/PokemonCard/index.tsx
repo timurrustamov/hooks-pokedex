@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 
 import { Theme } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
+import cx from 'classnames';
 
 import Id from './Id';
 import Stats from './Stats';
@@ -18,13 +19,30 @@ const useStyles = makeStyles((theme: Theme) => ({
     alignItems: 'center',
   },
   card: {
+    position: 'relative',
     margin: '10%',
     minWidth: 220,
     maxWidth: 600,
     borderRadius: 20,
-    border: '1px solid #ffdd56',
     paddingBottom: '0.5rem',
-    background: 'linear-gradient(45deg, #c21500, #ffc500)',
+    background: '#303030',
+  },
+  red: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+  },
+  blue: {
+    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
+  },
+  loading: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    borderRadius: 20,
+    background: 'linear-gradient(45deg, transparent, #eee)',
   },
   name: {
     background: 'transparent',
@@ -43,29 +61,49 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 export type PokemonCardProps = {
-  id?: string | number
-  name?: string
+  /**
+   * Pokemon's id
+   * This id is displayed in the card, but also determines which image will be showed
+   */
+  id?: string | number;
+  // Name of the current pokemon
+  name?: string;
+  // Name change handler
+  onNameChange?: (name: string) => void;
+  /**
+   * @deprecated
+   * Show a loading state in the card
+   * Is kinda deprecated to be used in the demo as the loading is too quick and rapidly becomes dirty UX
+   */
+  loading?: boolean;
+  /**
+   * Types of the current pokemon
+   * This shape is here to match the response of pokemon API and to allow just destructure the response in the card
+   * Takes precedence over "type" property
+   */
   types?: [
     {
       type: {
-        name: PokemonType,
-      },
+        name: PokemonType;
+      };
     }
-  ]
-  onNameChange?: (name: string) => void
-  type?: PokemonType
-  onTypeChange?: (name: PokemonType) => void
-  hp?: number
-  weight?: string
-  height?: string
-  tiltX?: number
-  tiltY?: number,
+  ];
+  // Type of the current pokemon
+  type?: PokemonType;
+  onTypeChange?: (name: PokemonType) => void;
+  hp?: number;
+  weight?: string;
+  height?: string;
+  tiltX?: number;
+  tiltY?: number;
+  theme?: 'red' | 'blue';
 };
 
 const PokemonCard: FunctionComponent<PokemonCardProps> = (props) => {
   const {
     id = 25,
     name = 'Pokemon',
+    loading = false,
     onNameChange,
     type,
     types,
@@ -74,20 +112,29 @@ const PokemonCard: FunctionComponent<PokemonCardProps> = (props) => {
     onTypeChange,
     tiltX,
     tiltY,
+    theme,
   } = props;
   const classes = useStyles();
 
   return (
     <Tiltable className={classes.root} tiltX={tiltX} tiltY={tiltY}>
-      <div className={classes.card}>
-        {id && <img className={classes.image} src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} />}
+      <div className={cx(classes.card, theme && classes[theme])}>
+        {loading && <div className={classes.loading} />}
+        {id && (
+          <img className={classes.image} src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} />
+        )}
         <input
           value={name}
           onChange={(e) => onNameChange && onNameChange(e.target.value)}
           className={classes.name}
         />
         <Id id={id} />
-        <Stats type={types ? types[0].type.name : type} weight={weight} height={height} onTypeChange={onTypeChange} />
+        <Stats
+          type={types ? types[0].type.name : type}
+          weight={weight}
+          height={height}
+          onTypeChange={onTypeChange}
+        />
       </div>
     </Tiltable>
   );

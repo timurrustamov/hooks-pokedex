@@ -85,7 +85,9 @@ function useRequestState<T extends any[]>(createUrl: GetRequest<T>, ...args: T) 
 
 function createUseAxios<T extends any[]>(createConfig: GetRequest<T>, defer: boolean = false, refetch: any[] = []) {
   const hook = (...args: T) => {
+    // tslint:disable-next-line:react-hooks-nesting
     const { data, error, loading, reload, cancelToken } = useRequestState(createConfig, ...args);
+    // tslint:disable-next-line:react-hooks-nesting
     useRequestEffect(createConfig, cancelToken, reload, defer, ...args);
 
     return { data, error, loading, reload };

@@ -2,8 +2,12 @@ import React from 'react';
 
 import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router';
 
 import PagesRoot from './pages';
+
+const history = createBrowserHistory();
 
 const theme = createMuiTheme({
   typography: {
@@ -21,10 +25,12 @@ const theme = createMuiTheme({
 
 const App = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <PagesRoot />
-    </ThemeProvider>
+    <Router history={history}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <PagesRoot />
+      </ThemeProvider>
+    </Router>
   );
 };
 

@@ -7,13 +7,14 @@
     "jsRules": {},
     "rules": {
         "interface-over-type-literal": false,
+        "member-access": false,
         "quotemark": {
             "options": ["single", "jsx-double"]
         },
         "object-literal-sort-keys": false,
         "object-literal-key-quotes": false,
         "no-console": false,
-        "react-hooks-nesting": "error"
+        "react-hooks-nesting": "error",
     },
     "rulesDirectory": []
 }

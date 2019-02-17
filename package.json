@@ -19,8 +19,10 @@
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.7",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
+    "@types/react-router": "^4.4.4",
     "parcel-bundler": "^1.11.0",
     "tslint": "^5.12.1",
     "tslint-react-hooks": "^1.1.0",
