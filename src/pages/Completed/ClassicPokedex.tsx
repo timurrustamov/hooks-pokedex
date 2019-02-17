@@ -2,7 +2,7 @@ import React from 'react';
 
 import PokemonCard from '../../components/PokemonCard';
 import { PokemonType } from '../../components/PokemonCard/Stats/Type';
-import WithMousePosition, { withMousePosition } from '../../components/WithMousePosition';
+import withMousePosition from '../../components/withMousePosition';
 import ThemeContext from '../../context/theme';
 import WithPokemon from '../../components/WithPokemon';
 

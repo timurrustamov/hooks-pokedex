@@ -9,8 +9,8 @@ export type ClassicPokedexProps = {
 };
 
 export type ClassicPokedexState = {
-  name: string;
-  type: PokemonType;
+  name?: string;
+  type?: PokemonType;
 };
 
 class ClassicPokedex extends React.Component<ClassicPokedexProps, ClassicPokedexState> {
