@@ -2,12 +2,12 @@ import React from 'react';
 
 import { createMuiTheme, CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from '@material-ui/styles';
-import { createBrowserHistory } from 'history';
+import { createHashHistory } from 'history';
 import { Router } from 'react-router';
 
 import PagesRoot from './pages';
 
-const history = createBrowserHistory();
+const history = createHashHistory();
 
 const theme = createMuiTheme({
   typography: {

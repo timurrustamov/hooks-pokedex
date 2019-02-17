@@ -1,10 +1,13 @@
 {
-  "name": "hooks-recipe-creator",
+  "name": "hooks-pokedex-demo",
   "version": "1.0.0",
   "main": "index.js",
+  "homepage": "https://timurrustamov.github.io/hooks-pokedex/",
   "license": "MIT",
   "scripts": {
-    "start": "parcel serve src/index.html"
+    "start": "parcel serve src/index.html",
+    "build": "rimraf dist; parcel build src/index.html --public-url https://timurrustamov.github.io/hooks-pokedex/",
+    "deploy": "yarn build && gh-pages -d dist"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.2",
@@ -23,6 +26,7 @@
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
     "@types/react-router": "^4.4.4",
+    "gh-pages": "^2.0.1",
     "parcel-bundler": "^1.11.0",
     "tslint": "^5.12.1",
     "tslint-react-hooks": "^1.1.0",
