@@ -23,11 +23,12 @@ const Pokedex: FunctionComponent = () => {
   const [type, setType] = useState<PokemonType>('ground');
   const theme = useContext(ThemeContext);
   const { x, y } = useMousePosition();
-  const { data } = useDebouncedPokemon(name);
+  const { data, loading } = useDebouncedPokemon(name);
   useDocumentTitle(name);
 
   return (
     <PokemonCard
+      loading={loading}
       theme={theme}
       onNameChange={(newName) => setName(newName)}
       type={type}

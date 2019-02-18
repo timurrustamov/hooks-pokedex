@@ -41,8 +41,9 @@ class ClassicPokedex extends React.Component<Props, State> {
       <ThemeContext.Consumer>
         {(theme) => (
           <WithPokemon name={name}>
-            {({ data }) => (
+            {({ data, loading }) => (
               <PokemonCard
+                loading={loading}
                 theme={theme}
                 onNameChange={(newName) => {
                   this.setState({ name: newName });

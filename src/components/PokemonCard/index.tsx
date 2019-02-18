@@ -9,6 +9,10 @@ import Stats from './Stats';
 import { PokemonType } from './Stats/Type';
 import Tiltable from './Tiltable';
 
+import images from '../../assets/*.png';
+import missingNo from '../../assets/missingNo.png';
+import useDebounce from '../../hooks/useDebounce';
+
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     maxHeight: 600,
@@ -28,11 +32,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     background: '#303030',
   },
   red: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    background:
+      'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   },
   blue: {
-    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    background:
+      'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
     boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
   },
   loading: {
@@ -56,6 +62,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     position: 'relative',
     display: 'block',
     width: '120%',
+    maxHeight: 372,
     transform: 'translate(-10%, -10%)',
   },
 }));
@@ -65,7 +72,7 @@ export type PokemonCardProps = {
    * Pokemon's id
    * This id is displayed in the card, but also determines which image will be showed
    */
-  id?: string | number;
+  id?: number;
   // Name of the current pokemon
   name?: string;
   // Name change handler
@@ -99,7 +106,9 @@ export type PokemonCardProps = {
   theme?: 'red' | 'blue';
 };
 
-const PokemonCard: FunctionComponent<PokemonCardProps> = (props) => {
+const PokemonCard: FunctionComponent<PokemonCardProps> = (
+  props,
+) => {
   const {
     id = 25,
     name = 'Pokemon',
@@ -115,17 +124,30 @@ const PokemonCard: FunctionComponent<PokemonCardProps> = (props) => {
     theme,
   } = props;
   const classes = useStyles();
+  const debouncedLoading = useDebounce(loading, 100);
 
   return (
-    <Tiltable className={classes.root} tiltX={tiltX} tiltY={tiltY}>
-      <div className={cx(classes.card, theme && classes[theme])}>
-        {loading && <div className={classes.loading} />}
+    <Tiltable
+      className={classes.root}
+      tiltX={tiltX}
+      tiltY={tiltY}>
+      <div
+        className={cx(
+          classes.card,
+          theme && classes[theme],
+        )}>
+        {debouncedLoading && <div className={classes.loading} />}
         {id && (
-          <img className={classes.image} src={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`} />
+          <img
+            className={classes.image}
+            src={`${images[id] || missingNo}`}
+          />
         )}
         <input
           value={name}
-          onChange={(e) => onNameChange && onNameChange(e.target.value)}
+          onChange={(e) => {
+            onNameChange && onNameChange(e.target.value);
+          }}
           className={classes.name}
         />
         <Id id={id} />
