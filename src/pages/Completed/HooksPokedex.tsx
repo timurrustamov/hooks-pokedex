@@ -1,4 +1,8 @@
-import React, { FunctionComponent, useContext, useState } from 'react';
+import React, {
+  FunctionComponent,
+  useContext,
+  useState,
+} from 'react';
 
 import PokemonCard from '../../components/PokemonCard';
 import { PokemonType } from '../../components/PokemonCard/Stats/Type';

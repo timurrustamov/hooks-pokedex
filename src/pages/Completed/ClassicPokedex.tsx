@@ -6,18 +6,18 @@ import withMousePosition from '../../components/withMousePosition';
 import ThemeContext from '../../context/theme';
 import WithPokemon from '../../components/WithPokemon';
 
-export type ClassicPokedexProps = {
+export type Props = {
   x?: number;
   y?: number;
 };
 
-export type ClassicPokedexState = {
+export type State = {
   name: string;
   type: PokemonType;
 };
 
-class ClassicPokedex extends React.Component<ClassicPokedexProps, ClassicPokedexState> {
-  state: ClassicPokedexState = {
+class ClassicPokedex extends React.Component<Props, State> {
+  state: State = {
     name: 'Pokemon',
     type: 'ground',
   };
@@ -25,7 +25,10 @@ class ClassicPokedex extends React.Component<ClassicPokedexProps, ClassicPokedex
   componentDidMount() {
     document.title = this.state.name;
   }
-  componentDidUpdate(_previousProps: ClassicPokedexProps, previousState: ClassicPokedexState) {
+  componentDidUpdate(
+    _previousProps: Props,
+    previousState: State,
+  ) {
     if (previousState.name !== this.state.name) {
       document.title = this.state.name;
     }
@@ -41,9 +44,13 @@ class ClassicPokedex extends React.Component<ClassicPokedexProps, ClassicPokedex
             {({ data }) => (
               <PokemonCard
                 theme={theme}
-                onNameChange={(newName) => this.setState({ name: newName })}
+                onNameChange={(newName) => {
+                  this.setState({ name: newName });
+                }}
                 type={type}
-                onTypeChange={(newType) => this.setState({ type: newType })}
+                onTypeChange={(newType) => {
+                  this.setState({ type: newType });
+                }}
                 tiltX={x}
                 tiltY={y}
                 {...data}
