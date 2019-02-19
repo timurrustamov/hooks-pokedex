@@ -12,35 +12,38 @@ export type Props = {
 };
 
 export type State = {
-  name: string;
-  type: PokemonType;
+  name?: string;
+  type?: PokemonType;
+  debouncedName?: string;
 };
 
 class ClassicPokedex extends React.Component<Props, State> {
+  timeout = -1;
   state: State = {
     name: 'Pokemon',
     type: 'ground',
   };
 
   componentDidMount() {
-    document.title = this.state.name;
+    document.title = this.state.name || '';
   }
-  componentDidUpdate(
-    _previousProps: Props,
-    previousState: State,
-  ) {
+  componentDidUpdate(_previousProps: Props, previousState: State) {
     if (previousState.name !== this.state.name) {
-      document.title = this.state.name;
+      document.title = this.state.name || '';
+      window.clearTimeout(this.timeout);
+      this.timeout = window.setTimeout(() => {
+        this.setState({ debouncedName: this.state.name });
+      }, 300);
     }
   }
 
   public render() {
     const { x, y } = this.props;
-    const { name, type } = this.state;
+    const { name, debouncedName, type } = this.state;
     return (
       <ThemeContext.Consumer>
         {(theme) => (
-          <WithPokemon name={name}>
+          <WithPokemon name={debouncedName}>
             {({ data, loading }) => (
               <PokemonCard
                 loading={loading}

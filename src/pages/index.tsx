@@ -8,6 +8,7 @@ import ClassicPokedex from './ClassicPokedex';
 import CompletedClassicPokedex from './Completed/ClassicPokedex';
 import CompletedHooksPokedex from './Completed/HooksPokedex';
 import HooksPokedex from './HooksPokedex';
+import RequestDelay from '../components/RequestDelay';
 
 const useStyles = makeStyles({
   root: {
@@ -33,6 +34,15 @@ const renderClassicPokedex = () => {
     </ThemeContext.Provider>
   );
 };
+const renderRequestDelayClassicPokedex = () => {
+  return (
+    <RequestDelay>
+      <ThemeContext.Provider value="red">
+        <ClassicPokedex />
+      </ThemeContext.Provider>
+    </RequestDelay>
+  );
+};
 const renderHooksPokedex = () => {
   return (
     <ThemeContext.Provider value="blue">
@@ -40,18 +50,35 @@ const renderHooksPokedex = () => {
     </ThemeContext.Provider>
   );
 };
+const renderRequestDelayHooksPokedex = () => {
+  return (
+    <RequestDelay>
+      <ThemeContext.Provider value="blue">
+        <HooksPokedex />
+      </ThemeContext.Provider>
+    </RequestDelay>
+  );
+};
+
+/**
+ * Completed versions
+ */
 const renderCompletedClassicPokedex = () => {
   return (
-    <ThemeContext.Provider value="red">
-      <CompletedClassicPokedex />
-    </ThemeContext.Provider>
+    <RequestDelay>
+      <ThemeContext.Provider value="red">
+        <CompletedClassicPokedex />
+      </ThemeContext.Provider>
+    </RequestDelay>
   );
 };
 const renderCompletedHooksPokedex = () => {
   return (
-    <ThemeContext.Provider value="blue">
-      <CompletedHooksPokedex />
-    </ThemeContext.Provider>
+    <RequestDelay>
+      <ThemeContext.Provider value="blue">
+        <CompletedHooksPokedex />
+      </ThemeContext.Provider>
+    </RequestDelay>
   );
 };
 
@@ -80,8 +107,22 @@ const PagesRoot: FunctionComponent = () => {
       <Switch>
         <Route path="/classic" render={renderClassicPokedex} />
         <Route path="/hooks" render={renderHooksPokedex} />
-        <Route path="/completed/classic" render={renderCompletedClassicPokedex} />
-        <Route path="/completed/hooks" render={renderCompletedHooksPokedex} />
+        <Route
+          path="/delay/classic"
+          render={renderRequestDelayClassicPokedex}
+        />
+        <Route
+          path="/delay/hooks"
+          render={renderRequestDelayHooksPokedex}
+        />
+        <Route
+          path="/completed/classic"
+          render={renderCompletedClassicPokedex}
+        />
+        <Route
+          path="/completed/hooks"
+          render={renderCompletedHooksPokedex}
+        />
         <Route path="/" render={renderCompletedBothPokedex} />
       </Switch>
     </div>

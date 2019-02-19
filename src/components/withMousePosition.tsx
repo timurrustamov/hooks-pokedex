@@ -1,13 +1,13 @@
 import React from 'react';
 
-export type WithMousePositionState = {
+export type State = {
   x?: number;
   y?: number;
 };
 
-function withMousePosition<T = {}>(Component: React.ComponentType<T & WithMousePositionState>) {
-  return class extends React.Component<T, WithMousePositionState> {
-    state: WithMousePositionState = {
+function withMousePosition(Component: React.ComponentType<State>) {
+  return class extends React.Component<State> {
+    state: State = {
       x: 0,
       y: 0,
     };
@@ -17,10 +17,10 @@ function withMousePosition<T = {}>(Component: React.ComponentType<T & WithMouseP
     };
 
     componentDidMount() {
-      document.addEventListener('mousemove', this.handleMousePosition);
+      addEventListener('mousemove', this.handleMousePosition);
     }
     componentWillUnmount() {
-      document.removeEventListener('mousemove', this.handleMousePosition);
+      removeEventListener('mousemove', this.handleMousePosition);
     }
 
     render() {

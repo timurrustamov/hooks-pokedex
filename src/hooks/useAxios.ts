@@ -15,7 +15,7 @@ function createLoader<T extends any[]>(
   ...args: T
 ) {
   const config = createConfig(...args);
-  if (config) {
+  if (config && config.url) {
     setLoading(true);
     axios
       .request({

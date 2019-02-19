@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useDebugValue } from 'react';
 
 /**
  * Creates a debounced value with a delay
  */
 const useDebounce = <T>(value: T, delay: number) => {
   const [state, setState] = useState(value);
-
   useEffect(() => {
     const timeout = setTimeout(() => setState(value), delay);
     return () => clearTimeout(timeout);
